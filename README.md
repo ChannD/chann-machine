@@ -149,4 +149,6 @@
 
 ## 若依交流群
 
-QQ群：563107039 <a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=e7f5ea33bd5276472e7d3509d17a8d54ec201ed3fd5532006b1a27fba045e1ce"><img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="ruoyi-plus交流群" title="ruoyi-plus交流群"></a>  点击按钮入群。
+QQ群1：563107039 <a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=e7f5ea33bd5276472e7d3509d17a8d54ec201ed3fd5532006b1a27fba045e1ce"><img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="ruoyi-plus交流群" title="ruoyi-plus交流群1"></a>  已满。
+
+QQ群2：855672904 <a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=rKG-4DRIkhufiiPaoI8tVWPk9yK8klCx&jump_from=webapi"><img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="ruoyi-plus交流群" title="ruoyi-plus2交流群"></a>点击按钮入群。
