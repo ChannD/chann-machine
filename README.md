@@ -35,7 +35,7 @@
 
 ## 在线体验
 
-**Ruoyi-plus演示地址：暂无
+**Ruoyi-plus演示地址：http://ry.aileig.com/  后台登录：http://ry.aileig.com/admin/login
 
 文档地址：http://doc.ruoyi.vip
 ## ruoyi-plus新增功能演示图
