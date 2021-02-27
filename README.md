@@ -31,11 +31,11 @@
     
     j). 友情链接管理  k). 模板管理 l). 评论管理  m). 资源管理  n). 链接分类管理 o). 链接管理 p). PV页面访问管理 q). 其它
 
-7. 博客主题界面。配备三套前台博客页面主题随意切换。(pblog,pnews,avatar)在sys_config表中配置主题。 **avatar完整模板等更多免费模板请进群下载。** 
+7. 博客主题界面。配备四套前台博客页面主题随意切换。(pblog,pnews,avatar,jxhx)在sys_config表中配置主题。 **jxhx(《今夕和夕》)完整模板等更多免费模板请进群下载。** 
 
 ## 在线体验
 
-**Ruoyi-plus演示地址：http://106.13.164.230/blog
+**Ruoyi-plus演示地址：暂无
 
 文档地址：http://doc.ruoyi.vip
 ## ruoyi-plus新增功能演示图
