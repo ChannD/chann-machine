@@ -101,25 +101,6 @@
         <td></td>
     </tr>
 </table>
-## ruoyi-plus 博客演示图 （今夕和夕模板）
-
-<table>
-    <tr>
-        <td><img src="https://images.gitee.com/uploads/images/2021/0227/161852_f032f7ac_528854.png /></td>
-        <td><img src="https://images.gitee.com/uploads/images/2021/0227/162032_b78d7a95_528854.png"/></td>
-    </tr>
-    <tr>
-        <td><img src="https://images.gitee.com/uploads/images/2021/0227/162104_edf3119b_528854.png"/></td>
-        <td><img src="https://images.gitee.com/uploads/images/2021/0227/162206_e24555ac_528854.png"/></td>
-    </tr>
-    <tr>
-        <td><img src="https://images.gitee.com/uploads/images/2021/0227/162237_6f82e0d8_528854.png"/></td>
-        <td><img src="https://images.gitee.com/uploads/images/2021/0227/162303_56ceddd6_528854.png "/></td>
-    </tr>
-  
-</table>
-
-
 
 ## 若依交流群
 
