@@ -31,7 +31,7 @@ public class DefaultResolver implements Resolver {
         Document pageDoc =page.getHtml().getDocument();
         String link = page.getRequest().getUrl();
 
-        if(!spiderConfig.getEntryUrlsList().contains(link) || Pattern.matches(spiderConfig.getTargetRegex(), link)) {
+        if(!spiderConfig.getEntryUrlsList().contains(link) || Pattern.matches(spiderConfig.getTargetRegex(), link)||link.equals(spiderConfig.getTargetRegex())) {
             //入口页面无需取值，入口页面只是用于发现目标url，除非入口页面匹配目标url的正则
             for (SpiderField field : fields) {
                 String column=field.getField();//有可能取得同一个字段需要多个不同规则
