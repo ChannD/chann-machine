@@ -46,4 +46,9 @@ public class GeneralServiceImpl implements IGeneralService {
         }
         return false;
     }
+
+    @Override
+    public List<Map> selectByMap(String tableName, Map<String, Object> data) {
+        return generalMapper.selectByMap(tableName,data);
+    }
 }

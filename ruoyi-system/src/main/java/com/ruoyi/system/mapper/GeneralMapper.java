@@ -12,4 +12,5 @@ public interface GeneralMapper {
     List<String> selectAllColumns(@Param("tableName") String tableName);
     List<String> selectAllTables();
     List<String> selectColumnExtraInfo(@Param("tableName") String tableName,@Param("columnName") String columnName);
+    List<Map> selectByMap(@Param("tableName") String tableName,@Param("data") Map<String, Object> data);
 }

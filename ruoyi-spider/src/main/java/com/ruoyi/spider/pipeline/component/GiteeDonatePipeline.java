@@ -3,6 +3,7 @@ package com.ruoyi.spider.pipeline.component;
 import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.common.utils.spring.SpringUtils;
 import com.ruoyi.system.service.IGeneralService;
+import org.apache.commons.collections.CollectionUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -13,6 +14,7 @@ import us.codecraft.webmagic.Task;
 import us.codecraft.webmagic.pipeline.Pipeline;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -52,7 +54,15 @@ public class GiteeDonatePipeline  implements Pipeline {
                     avatar=avatarDoc.select("div.users__personal-avatar > a > img").first().attr("src");
                 }
                 map.put("avatar",avatar);*/
-                generalService.generalInsert(tableName,map);
+                //先查询数据库
+                Map queryMap=new HashMap();
+                queryMap.put("uid",account);
+                queryMap.put("donate_time",donate_time);
+                List<Map> list=generalService.selectByMap(tableName,queryMap);
+                if(CollectionUtils.isEmpty(list)){
+                    generalService.generalInsert(tableName,map);
+                }
+
             }
 
         }

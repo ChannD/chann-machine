@@ -9,4 +9,5 @@ public interface IGeneralService {
    List<String> selectAllColumns(String tableName);
    List<String> selectAllTables();
    boolean isAutoColumn(String tableName,String columnName);
+   List<Map> selectByMap(String tableName,Map<String, Object> data);
 }

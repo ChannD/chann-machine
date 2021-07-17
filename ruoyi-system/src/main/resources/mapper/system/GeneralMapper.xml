@@ -31,4 +31,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="selectColumnExtraInfo" resultType="String">
         SELECT extra FROM information_schema.columns WHERE    table_name =#{tableName} AND  column_name=#{columnName}
     </select>
+    <select id="selectByMap" parameterType="map"  resultType="map">
+        SELECT *
+        FROM ${tableName}
+        <where>
+                <foreach collection="data.entrySet()" index="key" item="item" separator="and">
+                    ${key}=#{item}
+                </foreach>
+        </where>
+    </select>
 </mapper>

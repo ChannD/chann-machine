@@ -86,7 +86,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="showLog != null ">#{showLog},</if>
             <if test="saveDb != null ">#{saveDb},</if>
             <if test="spiderHighSetting != null ">#{spiderHighSetting},</if>
-            <if test="userDefinePipeline != null ">#{user_define_pipeline},</if>
+            <if test="userDefinePipeline != null ">#{userDefinePipeline},</if>
          </trim>
     </insert>
 
