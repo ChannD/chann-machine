@@ -222,9 +222,7 @@
         <module>ruoyi-quartz</module>
         <module>ruoyi-generator</module>
         <module>ruoyi-common</module>
-        <module>ruoyi-third</module>
         <module>ruoyi-ehcache</module>
-        <module>ruoyi-oss</module>
         <module>ruoyi-cms</module>
         <module>ruoyi-blog</module>
         <module>ruoyi-plugs</module>

@@ -4,7 +4,8 @@ import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.spring.SpringUtils;
 import com.ruoyi.framework.shiro.CustomModularRealmAuthenticator;
-import com.ruoyi.framework.shiro.realm.PhoneRealm;
+import com.ruoyi.framework.shiro.RetryLimitHashedCredentialsMatcher;
+import com.ruoyi.framework.shiro.realm.NoPwdUserRealm;
 import com.ruoyi.framework.shiro.realm.UserRealm;
 import com.ruoyi.framework.shiro.session.OnlineSessionDAO;
 import com.ruoyi.framework.shiro.session.OnlineSessionFactory;
@@ -156,27 +157,12 @@ public class ShiroConfig
         return userRealm;
     }
     @Bean
-    public PhoneRealm phoneRealm(){
-        PhoneRealm phoneRealm = new PhoneRealm();
-        phoneRealm.setCacheManager(getEhCacheManager());
-        return phoneRealm;
+    public NoPwdUserRealm noPwdUserRealm(){
+        NoPwdUserRealm noPwdUserRealm = new NoPwdUserRealm();
+        noPwdUserRealm.setCredentialsMatcher(new RetryLimitHashedCredentialsMatcher());
+        noPwdUserRealm.setCacheManager(getEhCacheManager());
+        return noPwdUserRealm;
     }
-    /**
-     * 认证器
-     */
-   /* @Bean
-    public Authenticator authenticator(){
-        // 自定义模块化认证器，用于解决多realm抛出异常问题
-        CustomModularRealmAuthenticator authenticator = new CustomModularRealmAuthenticator();
-        // 认证策略：AtLeastOneSuccessfulStrategy(默认)，AllSuccessfulStrategy，FirstSuccessfulStrategy
-        authenticator.setAuthenticationStrategy(new AtLeastOneSuccessfulStrategy());
-        // 加入realms
-        List<Realm> realms = new ArrayList<>();
-        realms.add(userRealm());
-        realms.add(phoneRealm());
-        authenticator.setRealms(realms);
-        return authenticator;
-    }*/
 
     /**
      * 自定义sessionDAO会话
@@ -239,7 +225,7 @@ public class ShiroConfig
         // 加入realms
         List<Realm> realms = new ArrayList<>();
         realms.add(userRealm());
-        realms.add(phoneRealm());
+        realms.add(noPwdUserRealm());
         authenticator.setRealms(realms);
         securityManager.setAuthenticator(authenticator);
         // 设置realm.
@@ -360,6 +346,9 @@ public class ShiroConfig
 
         filterChainDefinitionMap.put("/badge", "anon");
         filterChainDefinitionMap.put("/badge/*.html", "anon");
+
+        filterChainDefinitionMap.put("/thirdLogin/**", "anon");
+
         // 系统权限列表
         // filterChainDefinitionMap.putAll(SpringUtils.getBean(IMenuService.class).selectPermsAll());
 

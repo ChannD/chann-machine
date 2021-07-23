@@ -1,8 +1,11 @@
 package com.ruoyi.framework.shiro;
 
+import com.ruoyi.framework.shiro.realm.NoPwdUserRealm;
+import com.ruoyi.framework.shiro.realm.UserRealm;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
+import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authc.pam.AuthenticationStrategy;
 import org.apache.shiro.authc.pam.ModularRealmAuthenticator;
 import org.apache.shiro.realm.Realm;
@@ -31,11 +34,19 @@ public class CustomModularRealmAuthenticator extends ModularRealmAuthenticator {
 
                 AuthenticationInfo info = null;
                 //Throwable t = null;
-
-                try {
-                    info = realm.getAuthenticationInfo(token);
-                } catch (AuthenticationException e) {
-                    authenticationException = e;
+                if(token.getClass().getName().equals(UsernamePasswordToken.class.getName())&&realm.getClass().getName().equals(UserRealm.class.getName())){
+                    try {
+                        info = realm.getAuthenticationInfo(token);
+                    } catch (AuthenticationException e) {
+                        authenticationException = e;
+                    }
+                }
+                if(token.getClass().getName().equals(com.ruoyi.framework.shiro.token.UsernamePasswordToken.class.getName())&&realm.getClass().getName().equals(NoPwdUserRealm.class.getName())){
+                    try {
+                        info = realm.getAuthenticationInfo(token);
+                    } catch (AuthenticationException e) {
+                        authenticationException = e;
+                    }
                 }
 
                 aggregate = strategy.afterAttempt(realm, token, info, aggregate, authenticationException);

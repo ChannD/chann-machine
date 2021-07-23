@@ -2,7 +2,6 @@ package com.ruoyi.forum.controller;
 
 import cn.hutool.cache.Cache;
 import cn.hutool.cache.CacheUtil;
-import cn.hutool.core.util.IdcardUtil;
 import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Lists;
 import com.ruoyi.cms.domain.ArticleTemplate;
@@ -23,9 +22,7 @@ import com.ruoyi.common.utils.file.FileUploadUtils;
 import com.ruoyi.forum.domain.*;
 import com.ruoyi.forum.service.*;
 import com.ruoyi.framework.shiro.service.SysPasswordService;
-import com.ruoyi.framework.shiro.token.PhoneToken;
 import com.ruoyi.framework.util.ShiroUtils;
-import com.ruoyi.plugs.idCard.CheckIdCardUtils;
 import com.ruoyi.system.domain.SysUser;
 import com.ruoyi.system.service.ISysConfigService;
 import com.ruoyi.system.service.ISysUserService;
@@ -334,7 +331,7 @@ public class ForumController extends BaseController {
         if(!sessionCode.equals(code)){
             return AjaxResult.error("验证码错误!");
         }
-        PhoneToken token = new PhoneToken(phone);
+        com.ruoyi.framework.shiro.token.UsernamePasswordToken token = new com.ruoyi.framework.shiro.token.UsernamePasswordToken(phone);
 
         Subject subject = SecurityUtils.getSubject();
         try

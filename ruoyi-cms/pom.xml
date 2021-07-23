@@ -23,7 +23,7 @@
         </dependency>
         <dependency>
             <groupId>com.ruoyi</groupId>
-            <artifactId>ruoyi-third</artifactId>
+            <artifactId>ruoyi-plugs-third</artifactId>
             <version>4.4.0</version>
         </dependency>
 
