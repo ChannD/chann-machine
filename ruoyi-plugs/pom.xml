@@ -17,6 +17,7 @@
         <module>ruoyi-plugs-third</module>
         <module>ruoyi-plugs-oss</module>
         <module>ruoyi-plugs-thirdlogin</module>
+        <module>ruoyi-plugs-ehcache</module>
     </modules>
 
 </project>

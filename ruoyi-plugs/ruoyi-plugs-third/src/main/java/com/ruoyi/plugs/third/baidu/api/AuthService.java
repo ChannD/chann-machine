@@ -1,9 +1,10 @@
 package com.ruoyi.plugs.third.baidu.api;
 
 
+import cn.hutool.cache.Cache;
+import cn.hutool.cache.CacheUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.ruoyi.common.utils.StringUtils;
-import com.ruoyi.ehcache.util.EhCacheUtils;
 import com.ruoyi.plugs.third.config.ThirdConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,17 +22,18 @@ import java.util.Map;
 public class AuthService {
     protected Logger logger = LoggerFactory.getLogger(getClass());
     public static String KEY_AccessToken="BaiduAi.AccessToken";
+    private static Cache<String,String> authCache= CacheUtil.newTimedCache(1000*60*60*3);
     /**
      * 获得条用借口凭证 access_token
      */
     public static String getAccessToken(){
         //{"error_msg":"Access token expired","error_code":111}
-        String access_token=(String) EhCacheUtils.getSysInfo(KEY_AccessToken);
+        String access_token=authCache.get(KEY_AccessToken);
         if(StringUtils.isEmpty(access_token)){
             String AK= ThirdConfig.getBaiduAiAk();
             String SK= ThirdConfig.getBaiduAiSk();
             access_token=AuthService.getAuth(AK,SK);
-            EhCacheUtils.putSysInfo(KEY_AccessToken,access_token);
+            authCache.put(KEY_AccessToken,access_token);
         }
         return access_token;
     }
@@ -45,7 +47,7 @@ public class AuthService {
         String access_token=AuthService.getAuth(AK,SK);
         logger.info("refreshAccessToken=>"+access_token);
         if(StringUtils.isNotEmpty(access_token)){
-            EhCacheUtils.putSysInfo(KEY_AccessToken,access_token);
+            authCache.put(KEY_AccessToken,access_token);
             logger.info("refreshAccessToken=>"+access_token);
         }
     }

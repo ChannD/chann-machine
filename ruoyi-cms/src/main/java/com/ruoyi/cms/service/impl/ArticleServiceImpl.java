@@ -3,7 +3,6 @@ package com.ruoyi.cms.service.impl;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import cn.hutool.cache.Cache;
 import cn.hutool.cache.CacheUtil;
 import com.google.common.collect.Lists;
@@ -15,9 +14,8 @@ import com.ruoyi.cms.service.ICategoryService;
 import com.ruoyi.common.config.Global;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.utils.DateUtils;
-import com.ruoyi.common.utils.Guid;
 import com.ruoyi.common.utils.StringUtils;
-import com.ruoyi.ehcache.util.EhCacheUtils;
+import com.ruoyi.plugs.ehcache.util.EhCacheUtils;
 import com.ruoyi.framework.util.ShiroUtils;
 import com.ruoyi.system.domain.SysUser;
 import org.apache.commons.collections.CollectionUtils;
@@ -31,12 +29,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 文章管理Service业务层处理
- * 
+ *
  * @author wujiyue
  * @date 2019-10-28
  */
 @Service
-public class ArticleServiceImpl implements IArticleService 
+public class ArticleServiceImpl implements IArticleService
 {
     @Autowired
     private ArticleMapper articleMapper;
@@ -49,7 +47,7 @@ public class ArticleServiceImpl implements IArticleService
     private Cache<String, Tags> tagCache= CacheUtil.newLFUCache(100);
     /**
      * 查询文章管理
-     * 
+     *
      * @param id 文章管理ID
      * @return 文章管理
      */
@@ -69,7 +67,7 @@ public class ArticleServiceImpl implements IArticleService
 
     /**
      * 查询文章管理列表
-     * 
+     *
      * @param article 文章管理
      * @return 文章管理
      */
@@ -84,7 +82,7 @@ public class ArticleServiceImpl implements IArticleService
 
     /**
      * 新增文章管理
-     * 
+     *
      * @param article 文章管理
      * @return 结果
      */
@@ -123,7 +121,7 @@ public class ArticleServiceImpl implements IArticleService
 
     /**
      * 修改文章管理
-     * 
+     *
      * @param article 文章管理
      * @return 结果
      */
@@ -155,7 +153,7 @@ public class ArticleServiceImpl implements IArticleService
 
     /**
      * 删除文章管理对象
-     * 
+     *
      * @param ids 需要删除的数据ID
      * @return 结果
      */
@@ -168,7 +166,7 @@ public class ArticleServiceImpl implements IArticleService
 
     /**
      * 删除文章管理信息
-     * 
+     *
      * @param id 文章管理ID
      * @return 结果
      */
