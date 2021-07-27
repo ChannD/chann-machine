@@ -57,10 +57,11 @@ public class CommonController
     {
         try
         {
-            if (!FileUtils.isValidFilename(fileName))
+            if (!FileUtils.checkAllowDownload(fileName))
             {
                 throw new Exception(StringUtils.format("文件名称({})非法，不允许下载。 ", fileName));
             }
+
             String realFileName = System.currentTimeMillis() + fileName.substring(fileName.indexOf("_") + 1);
             String filePath = Global.getDownloadPath() + fileName;
 
@@ -173,6 +174,10 @@ public class CommonController
     public void resourceDownload(String resource, HttpServletRequest request, HttpServletResponse response)
             throws Exception
     {
+        if (!FileUtils.checkAllowDownload(resource))
+        {
+            throw new Exception(StringUtils.format("文件名称({})非法，不允许下载。 ", resource));
+        }
         // 本地资源路径
         String localPath = Global.getProfile();
         // 数据库资源地址

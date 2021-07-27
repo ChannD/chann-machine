@@ -1,5 +1,8 @@
 package com.ruoyi.common.utils.file;
 
+import com.ruoyi.common.utils.StringUtils;
+import org.apache.commons.lang3.ArrayUtils;
+
 import java.io.*;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -8,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * 文件处理工具类
- * 
+ *
  * @author ruoyi
  */
 public class FileUtils extends org.apache.commons.io.FileUtils
@@ -17,7 +20,7 @@ public class FileUtils extends org.apache.commons.io.FileUtils
 
     /**
      * 输出指定文件的byte数组
-     * 
+     *
      * @param filePath 文件路径
      * @param os 输出流
      * @return
@@ -73,7 +76,7 @@ public class FileUtils extends org.apache.commons.io.FileUtils
 
     /**
      * 删除文件
-     * 
+     *
      * @param filePath 文件
      * @return
      */
@@ -92,7 +95,7 @@ public class FileUtils extends org.apache.commons.io.FileUtils
 
     /**
      * 文件名称验证
-     * 
+     *
      * @param filename 文件名称
      * @return true 正常 false 非法
      */
@@ -102,8 +105,32 @@ public class FileUtils extends org.apache.commons.io.FileUtils
     }
 
     /**
+     * 检查文件是否可下载
+     *
+     * @param resource 需要下载的文件
+     * @return true 正常 false 非法
+     */
+    public static boolean checkAllowDownload(String resource)
+    {
+        // 禁止目录上跳级别
+        if (StringUtils.contains(resource, ".."))
+        {
+            return false;
+        }
+
+        // 检查允许下载的文件规则
+        if (ArrayUtils.contains(MimeTypeUtils.DEFAULT_ALLOWED_EXTENSION, FileTypeUtils.getFileType(resource)))
+        {
+            return true;
+        }
+
+        // 不在允许下载的文件规则
+        return false;
+    }
+
+    /**
      * 下载文件名重新编码
-     * 
+     *
      * @param request 请求对象
      * @param fileName 文件名
      * @return 编码后的文件名
