@@ -8,6 +8,7 @@ public class ThirdOauth extends BaseEntity {
     private String userId;
     private String openid;
     private String loginType;
+    private String accessToken;
     private String bindTime;
 
     public Long getId() {
@@ -48,6 +49,14 @@ public class ThirdOauth extends BaseEntity {
 
     public void setBindTime(String bindTime) {
         this.bindTime = bindTime;
+    }
+
+    public String getAccessToken() {
+        return accessToken;
+    }
+
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
     }
 
     @Override

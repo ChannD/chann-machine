@@ -17,7 +17,7 @@ import java.util.List;
 
 /**
  * 用户对象 sys_user
- * 
+ *
  * @author ruoyi
  */
 public class SysUser extends BaseEntity
@@ -97,7 +97,7 @@ public class SysUser extends BaseEntity
     /** 最后登陆IP */
     @Excel(name = "最后登陆IP", type = Type.EXPORT)
     private String loginIp;
-
+    private String thirdAccount;//扩展字段，用户第三方登录的账号，不同于openid
     /** 最后登陆时间 */
     @Excel(name = "最后登陆时间", width = 30, dateFormat = "yyyy-MM-dd HH:mm:ss", type = Type.EXPORT)
     private Date loginDate;
@@ -402,6 +402,14 @@ public class SysUser extends BaseEntity
 
     public void setLastLoginTime(Date lastLoginTime) {
         this.lastLoginTime = lastLoginTime;
+    }
+
+    public String getThirdAccount() {
+        return thirdAccount;
+    }
+
+    public void setThirdAccount(String thirdAccount) {
+        this.thirdAccount = thirdAccount;
     }
 
     @Override

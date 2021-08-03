@@ -1,20 +1,15 @@
 package com.ruoyi.plugs.thirdlogin.gitee;
 
 import com.alibaba.fastjson.JSONObject;
-import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
-import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.common.utils.IpUtils;
 import com.ruoyi.common.utils.ServletUtils;
 import com.ruoyi.common.utils.StringUtils;
-import com.ruoyi.framework.shiro.service.SysPasswordService;
 import com.ruoyi.framework.util.ShiroUtils;
-import com.ruoyi.plugs.thirdlogin.domain.ThirdPartyUser;
+import com.ruoyi.plugs.thirdlogin.BaseThirdLoginController;
 import com.ruoyi.plugs.thirdlogin.domain.ThirdOauth;
-import com.ruoyi.plugs.thirdlogin.service.IThirdOauthService;
-import com.ruoyi.plugs.thirdlogin.service.ThirdLoginService;
+import com.ruoyi.plugs.thirdlogin.domain.ThirdPartyUser;
 import com.ruoyi.system.domain.SysUser;
-import com.ruoyi.system.service.ISysUserService;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -25,12 +20,10 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -40,7 +33,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-public class GiteeThirdLogin extends BaseController {
+public class GiteeThirdLoginController extends BaseThirdLoginController {
 
     @Value("${third.login.gitee.authorize_url}")
     public  String  AUTHORIZE_URL;
@@ -52,21 +45,6 @@ public class GiteeThirdLogin extends BaseController {
     public  String REDIRECT_URL;
     @Value("${third.login.gitee.scope}")
     public  String SCOPE;
-    @Value("${third.login.to_bind_url}")
-    public  String BIND_URL;
-    @Autowired
-    ISysUserService userService;
-    @Autowired
-    private SysPasswordService passwordService;
-    @Value("${front.register.deptId}")
-    public  String  registerUserDeptId;//前台用户注册赋予的默认部门id
-    @Value("${front.register.roleId}")
-    public  String registerUserRoleId;//前台用户注册赋予的默认角色id
-
-    @Autowired
-    private IThirdOauthService thirdOauthService;
-    @Autowired
-    private ThirdLoginService thirdLoginService;
 
     @GetMapping(value = "/thirdLogin/gitee")
     public void gitee(HttpServletRequest request, HttpServletResponse response){
@@ -82,20 +60,7 @@ public class GiteeThirdLogin extends BaseController {
             throw new RuntimeException(e);
         }
     }
-    @RequestMapping(value = "/thirdLogin/unbind/gitee")
-    @ResponseBody
-    public AjaxResult unbindGitee(HttpServletRequest request, HttpServletResponse response){
-        SysUser user= ShiroUtils.getSysUser();
-        if(user!=null){
-            String userId=user.getUserId().toString();
-            String type="gitee";
-            int n = thirdOauthService.deleteThirdOauthByUserIdAndLoginType(userId,type);
-            if(n>0){
-                return AjaxResult.success("解绑gitee账号成功!");
-            }
-        }
-        return error();
-    }
+
     @RequestMapping(value = "/thirdLogin/gitee/callback")
     public String giteeCallback(HttpServletRequest request) throws Exception {
         String host = request.getHeader("host");
@@ -117,6 +82,7 @@ public class GiteeThirdLogin extends BaseController {
             //获取用户
             ThirdPartyUser thirdPartyUser = this.geAccessTokentUserInfo(access_token);
             if(thirdPartyUser!=null){
+                thirdPartyUser.setAccessToken(access_token);
                 //查询第三方登录
                 ThirdOauth form=new ThirdOauth();
                 form.setLoginType("gitee");
@@ -131,7 +97,9 @@ public class GiteeThirdLogin extends BaseController {
                         list=thirdOauthService.selectThirdOauthList(form);
                     }else{
                         //跳转到绑定用户页面
-                        return "redirect:"+BIND_URL;
+                        String url=BIND_URL+"?type=gitee&openid="+thirdPartyUser.getOpenid()+"&successUri="+redirect+"&thirdAccount="+thirdPartyUser.getAccount();
+                        request.getSession().setAttribute("access_token",access_token);
+                        return "redirect:"+url;
                     }
                 }
                 //已经绑定过
@@ -159,7 +127,6 @@ public class GiteeThirdLogin extends BaseController {
     private SysUser registThirdUser(ThirdPartyUser thirdPartyUser){
         HttpServletRequest request= ServletUtils.getRequest();
         SysUser user=new SysUser();
-        //user.setGiteeAccount(thirdPartyUser.getAccount());
         user.setLoginName(thirdPartyUser.getAccount());
         user.setUserName(thirdPartyUser.getUserName());
         user.setSalt(ShiroUtils.randomSalt());
@@ -184,22 +151,7 @@ public class GiteeThirdLogin extends BaseController {
             return  null;
         }
     }
-    private void insertThirdOauth(ThirdPartyUser thirdPartyUser,String userId){
-        ThirdOauth thirdOauth=new ThirdOauth();
-        thirdOauth.setOpenid(thirdPartyUser.getOpenid());
-        thirdOauth.setLoginType(thirdPartyUser.getProvider());
-        thirdOauth.setBindTime(DateUtils.getTime());
-        thirdOauth.setUserId(userId);
-        ThirdOauth form=new ThirdOauth();
-        form.setOpenid(thirdPartyUser.getOpenid());
-        form.setLoginType(thirdPartyUser.getProvider());
-        form.setUserId(userId);
-        List<ThirdOauth>  list = thirdOauthService.selectThirdOauthList(form);
-        if(CollectionUtils.isEmpty(list)){
-            thirdOauthService.insertThirdOauth(thirdOauth);
-        }
 
-    }
     /**
      * 根据用户授权code获取授权token
      */
@@ -271,5 +223,10 @@ public class GiteeThirdLogin extends BaseController {
         String state_str= StringUtils.isEmpty(state)?"":"&state="+state;
         url=AUTHORIZE_URL.replaceAll("\\[client_id\\]",CLIENT_ID).replaceAll("\\[redirect_uri\\]",redirectUrl).replaceAll("\\[scope\\]",SCOPE)+state_str;
         return url;
+    }
+
+    @Override
+    public void bindSaveCallBack(SysUser user) {
+
     }
 }

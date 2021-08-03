@@ -16,6 +16,8 @@ public class ThirdPartyUser implements Serializable {
 	private String provider;// 用户类型
 	private Integer userId;// 用户id
 
+	private String accessToken;//扩展字段，传递数据用
+
 	public Integer getUserId() {
 		return userId;
 	}
@@ -78,6 +80,14 @@ public class ThirdPartyUser implements Serializable {
 
 	public void setGender(String gender) {
 		this.gender = gender;
+	}
+
+	public String getAccessToken() {
+		return accessToken;
+	}
+
+	public void setAccessToken(String accessToken) {
+		this.accessToken = accessToken;
 	}
 
 	@Override
