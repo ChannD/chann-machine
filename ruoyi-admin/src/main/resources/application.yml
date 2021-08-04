@@ -11,7 +11,8 @@ ruoyi:
   # blog页面何forum论坛页面是否启用缓存
   cacheEnabled: false
   # 文件路径 示例（ Windows配置D:\ruoyi-plus\uploads，Linux配置 /home/ruoyi/uploads）
-  profile: D:\ruoyi-plus\uploads
+#  profile: D:\ruoyi-plus\uploads
+  profile: /Volumes/DataWarehouse/Cache/ruoyi-plus/uploads
   # 获取ip地址开关
   addressEnabled: false
   # 菜单导航显示风格（default为左侧导航菜单，topnav为顶部导航菜单）
